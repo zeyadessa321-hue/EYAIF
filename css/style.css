@@ -1,0 +1,1842 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0b0f19;
+    color: #ffffff;
+    overflow-x: hidden;
+    direction: ltr;
+    /* اتجاه الموقع من اليسار لليمين */
+    text-align: left;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    z-index: 1000;
+    background: linear-gradient(to bottom, rgba(11, 15, 25, 0.95), transparent);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    text-decoration: none;
+}
+
+.site-logo {
+    height: 48px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.logo-container:hover .site-logo {
+    transform: scale(1.04);
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex: 2;
+    /* وضع القائمة في المنتصف تماماً */
+}
+
+.nav-spacer {
+    flex: 1;
+    /* عنصر موازنة مع جهة اللوجو */
+}
+
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #ffffff;
+}
+
+/* Hero & Video Background Section */
+/* =========================================
+   Mission Page (Canvas & Sticky Scroll)
+   ========================================= */
+
+.hero-section {
+    position: relative;
+    background: #000;
+    height: 700vh;
+}
+
+/* ================= 1. الخلفية والكانفاس ================= */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background: #000;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.4) 0%, rgba(9, 13, 22, 0.85) 100%);
+    pointer-events: none;
+}
+
+/* ================= 2. حاوية المحتوى الثابتة والتمرير ================= */
+.scroll-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.scroll-step {
+    position: absolute;
+    top: 50%;
+    width: calc(100% - 100px);
+    max-width: 580px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(calc(-50% + 25px));
+    transition: opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.45s;
+    will-change: transform, opacity;
+}
+
+/* حالة الشريحة النشطة (ظاهرة دائماً بوضوح 100%) */
+.scroll-step.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(-50%);
+}
+
+/* التوزيع اليمين واليسار */
+.scroll-step:nth-child(odd):not(.final-step) {
+    left: 8%;
+    right: auto;
+}
+
+.scroll-step:nth-child(even) {
+    right: 8%;
+    left: auto;
+}
+
+/* الشريحة الأخيرة في المنتصف */
+.scroll-step.final-step {
+    left: 50%;
+    right: auto;
+    max-width: 640px;
+    transform: translate(-50%, calc(-50% + 25px));
+}
+
+.scroll-step.final-step.active {
+    transform: translate(-50%, -50%);
+}
+
+/* ================= 3. تصميم الكارت الزجاجي ================= */
+.floating-content {
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(11, 15, 25, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #00a8e8;
+    padding: 42px 38px;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 35px rgba(0, 168, 232, 0.08);
+    pointer-events: auto;
+}
+
+/* ================= 4. تنسيقات النصوص الداخلية ================= */
+.floating-content h1,
+.floating-content h2 {
+    font-size: 2.1rem;
+    color: #ffffff;
+    margin-bottom: 18px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+}
+
+.floating-content p {
+    font-size: 1.05rem;
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin-bottom: 22px;
+}
+
+.mt-3 {
+    margin-top: 12px;
+}
+
+.section-tag {
+    display: inline-block;
+    color: #00a8e8;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.inner-heading {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* ================= 5. الزر الزجاجي ================= */
+.glass-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: rgba(0, 168, 232, 0.1);
+    border: 1px solid rgba(0, 168, 232, 0.4);
+    color: #00a8e8;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+    background: #00a8e8;
+    color: #ffffff;
+    transform: translateX(5px);
+    box-shadow: 0 10px 20px rgba(0, 168, 232, 0.3);
+}
+
+/* ================= 6. القسم الأخير (الوسط) ================= */
+.center-content {
+    text-align: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid #00a8e8;
+}
+
+.poetic-text {
+    font-size: 1.25rem !important;
+    font-style: italic;
+    color: #94a3b8 !important;
+    line-height: 1.9 !important;
+}
+
+.final-heading {
+    font-size: 2.3rem;
+    color: #ffffff;
+    font-weight: 800;
+    margin-top: 25px;
+}
+
+/* ================= 7. التجاوب مع الموبايل ================= */
+@media (max-width: 900px) {
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .site-logo {
+        height: 40px;
+    }
+
+    .logo-container,
+    .nav-spacer {
+        flex: none;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .scroll-step,
+    .scroll-step:nth-child(odd):not(.final-step),
+    .scroll-step:nth-child(even),
+    .scroll-step.final-step {
+        left: 50% !important;
+        right: auto !important;
+        width: calc(100% - 40px);
+        max-width: 480px;
+        transform: translate(-50%, calc(-50% + 25px)) !important;
+    }
+
+    .scroll-step.active,
+    .scroll-step:nth-child(odd):not(.final-step).active,
+    .scroll-step:nth-child(even).active,
+    .scroll-step.final-step.active {
+        transform: translate(-50%, -50%) !important;
+    }
+
+    .floating-content {
+        padding: 32px 22px;
+    }
+
+    .floating-content h1,
+    .floating-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .floating-content p {
+        font-size: 0.95rem;
+        line-height: 1.55;
+    }
+}
+
+
+/* =========================================
+   Light Theme Override (For Mentorship Page)
+   ========================================= */
+body.light-theme {
+    background-color: #f8fafc;
+    /* خلفية بيضاء مائلة للرمادي الفاتح جداً */
+    color: #0f172a;
+}
+
+/* تعديل ألوان الـ Navbar في الصفحة البيضاء */
+body.light-theme .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .logo-text {
+    color: #0f172a;
+}
+
+body.light-theme .nav-links a {
+    color: #64748b;
+}
+
+body.light-theme .nav-links a:hover,
+body.light-theme .nav-links a.active {
+    color: #2563eb;
+    /* لون أزرق عند التحديد */
+}
+
+/* =========================================
+   Mentorship Page Styling (Complete Image Fix)
+   ========================================= */
+.mentorship-page {
+    padding: 120px 20px 60px 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   Mentorship Page Header Styling
+   ========================================= */
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 10px;
+}
+
+.header-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2563eb;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.page-header h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+
+.page-header p {
+    font-size: 1.05rem;
+    color: #64748b;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   Mentor Cards
+   ========================================= */
+.mentor-card {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    align-items: center;
+}
+
+.mentor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.mentor-image {
+    flex: 0 0 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    align-self: stretch;
+}
+
+.mentor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.mentor-info {
+    padding: 25px 30px;
+    flex: 1;
+}
+
+.mentor-info h2 {
+    font-size: 1.75rem;
+    color: #0f172a;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.mentor-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.mentor-subtitle .separator {
+    margin: 0 6px;
+    color: #cbd5e1;
+}
+
+.mentor-desc {
+    color: #64748b;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.expertise-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 20px;
+    list-style: none;
+}
+
+.expertise-list li {
+    position: relative;
+    padding-left: 16px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.expertise-list li::before {
+    content: "•";
+    color: #2563eb;
+    font-size: 1.4rem;
+    position: absolute;
+    left: 0;
+    top: -6px;
+}
+
+.mentor-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 16px 0 12px 0;
+}
+
+.contact-links {
+    display: flex;
+    gap: 12px;
+}
+
+.contact-links a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.contact-links a:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+/* =========================================
+   Footer Styling (Clean & Minimal)
+   ========================================= */
+.site-footer {
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 25px 50px;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo .logo-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 1px;
+}
+
+.copyright {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+/* التجاوب مع شاشات الموبايل */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 20px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+}
+
+/* =========================================
+   التجاوب مع الشاشات الصغيرة والموبايل
+   ========================================= */
+@media (max-width: 900px) {
+    .mentor-card {
+        flex-direction: column;
+    }
+
+    .mentor-image {
+        flex: none;
+        width: 100%;
+        height: 260px;
+    }
+
+    .mentor-info {
+        padding: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header p {
+        font-size: 0.95rem;
+    }
+}
+
+/* =========================================
+   Featured Cinema-Style Overview Page
+   ========================================= */
+.hero-overview {
+    padding: 130px 20px 80px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Container Wrapper */
+.featured-video-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.featured-video-container:hover {
+    box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.08);
+}
+
+/* Aspect-Ratio Video Frame */
+.video-frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #090d16;
+    position: relative;
+}
+
+.video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Testimonial Section Under Video */
+.featured-testimonial {
+    padding: 40px;
+    display: flex;
+    gap: 25px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-top: 1px solid #f1f5f9;
+}
+
+.quote-symbol {
+    font-size: 3.8rem;
+    font-family: Georgia, serif;
+    color: #2563eb;
+    line-height: 0.8;
+    user-select: none;
+}
+
+.testimonial-content {
+    flex: 1;
+}
+
+.quote-body {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #334155;
+    font-weight: 450;
+    margin-bottom: 25px;
+}
+
+.student-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar-placeholder {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dbeafe;
+}
+
+.student-meta h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.student-meta span {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Responsive Handling */
+@media (max-width: 768px) {
+    .featured-testimonial {
+        padding: 25px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .quote-symbol {
+        font-size: 2.8rem;
+    }
+
+    .quote-body {
+        font-size: 1rem;
+    }
+}
+
+/* =========================================
+   Competition Page Styling (Tabs, About & Winners)
+   ========================================= */
+
+/* 1. Base Layout & Header */
+.competition-page {
+    padding: 120px 20px 60px 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.competition-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.competition-logo-wrapper {
+    margin-bottom: 20px;
+}
+
+.challenge-logo {
+    max-width: 240px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 168, 232, 0.12);
+}
+
+.challenge-cyan-text {
+    color: #00a8e8 !important;
+    letter-spacing: 2px !important;
+}
+
+/* 2. Tabs Navigation UI */
+.competition-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.comp-tab {
+    background: #f1f5f9;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comp-tab:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.comp-tab.active {
+    background: #00a8e8;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
+}
+
+.comp-view {
+    display: none;
+    animation: fadeInTab 0.4s ease forwards;
+}
+
+.comp-view.active-view {
+    display: block;
+}
+
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   3. About EYAC Tab Styling
+   ========================================= */
+.about-hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.about-hero h1 {
+    font-size: 2.5rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.about-lead {
+    font-size: 1.15rem;
+    color: #334155;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.about-section {
+    margin-bottom: 50px;
+}
+
+.about-section h2 {
+    font-size: 1.6rem;
+    color: #0f172a;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.section-desc {
+    color: #64748b;
+    font-size: 1.05rem;
+    margin-bottom: 25px;
+}
+
+/* Focus Grid */
+.focus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.focus-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.focus-card h4 {
+    font-size: 1.1rem;
+    color: #00a8e8;
+    margin-bottom: 10px;
+}
+
+.focus-card p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Participants Grid */
+.participants-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.participant-card {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.participant-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.participant-card h4 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.participant-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.section-note {
+    background: #f0f9ff;
+    color: #0369a1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    border-left: 4px solid #00a8e8;
+}
+
+/* Split Section & Lists */
+.split-section {
+    display: flex;
+    gap: 40px;
+}
+
+.split-section .half {
+    flex: 1;
+}
+
+.styled-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.styled-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.styled-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: 900;
+}
+
+.gains-list li::before {
+    color: #00a8e8;
+}
+
+/* Highlight Section (2026 Recap) */
+.highlight-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.recap-header p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.stats-banner {
+    display: flex;
+    justify-content: space-around;
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    text-align: center;
+    color: #ffffff;
+}
+
+.stat strong {
+    display: block;
+    font-size: 1.3rem;
+    color: #00a8e8;
+    margin-bottom: 5px;
+}
+
+.stat span {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.medals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.medal-card {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.medal-card p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* Beyond the Challenge CTA */
+.center-text {
+    text-align: center;
+}
+
+.center-text h2 {
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
+.max-w-700 {
+    max-width: 700px;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    padding: 40px;
+    border-radius: 16px;
+    margin-top: 40px;
+}
+
+.cta-box h3 {
+    font-size: 1.6rem;
+    color: #0369a1;
+    margin-bottom: 10px;
+}
+
+.cta-box p {
+    color: #0c4a6e;
+    margin-bottom: 25px;
+    font-size: 1.05rem;
+}
+
+/* =========================================
+   4. Winners Tab Styling (Vertical Portraits)
+   ========================================= */
+.honour-group {
+    margin-bottom: 50px;
+}
+
+.group-title h2 {
+    font-size: 1.4rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.portrait-grid {
+    display: grid;
+    gap: 25px;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.portrait-card {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.portrait-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 168, 232, 0.08);
+}
+
+.portrait-image-box {
+    flex: 0 0 170px;
+    height: 220px;
+    background: #f8fafc;
+    overflow: hidden;
+}
+
+.portrait-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.portrait-info {
+    padding: 25px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gold-tier {
+    border-left: 5px solid #f59e0b;
+}
+
+.silver-tier {
+    border-left: 5px solid #94a3b8;
+}
+
+.bronze-tier {
+    border-left: 5px solid #d97706;
+}
+
+.honour-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.gold-bg {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.silver-bg {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.bronze-bg {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.portrait-info h3 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.phone-number {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.phone-number svg {
+    color: #00a8e8;
+}
+
+/* =========================================
+   5. Responsive Handling (Mobile Support)
+   ========================================= */
+@media (max-width: 900px) {
+
+    /* About Tab Responsive */
+    .focus-grid,
+    .participants-grid,
+    .medals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .split-section {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .stats-banner {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .highlight-section {
+        padding: 25px;
+    }
+
+    /* Winners Tab Responsive */
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .portrait-card {
+        flex-direction: column;
+    }
+
+    .portrait-image-box {
+        flex: none;
+        width: 100%;
+        height: 260px;
+    }
+
+    .portrait-info {
+        padding: 20px;
+    }
+}
+
+/* =========================================
+   Projects Page & Project Details Styling
+   ========================================= */
+.projects-page,
+.project-details-page {
+    padding: 120px 20px 60px 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* Projects Main Grid */
+.projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Single Project Card Component */
+.project-card {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.project-card-image {
+    flex: 0 0 320px;
+    position: relative;
+    background: #f8fafc;
+}
+
+.project-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-category-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.project-card-info {
+    padding: 30px 35px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-card-info h2 {
+    font-size: 1.8rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.project-summary {
+    color: #64748b;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.project-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 18px;
+}
+
+.project-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.project-tags span {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.explore-btn:hover {
+    transform: translateX(3px);
+}
+
+/* =========================================
+   Project Details Inner Page (tectopower.html)
+   ========================================= */
+.back-navigation {
+    margin-bottom: 25px;
+}
+
+.back-navigation a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.back-navigation a:hover {
+    color: #2563eb;
+}
+
+.detail-header {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.detail-lead {
+    font-size: 1.2rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+.project-hero-media {
+    width: 100%;
+    max-height: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+}
+
+.project-hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+.content-block {
+    margin-bottom: 35px;
+}
+
+.content-block h2 {
+    font-size: 1.4rem;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.content-block p {
+    color: #475569;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.innovations-list {
+    list-style: none;
+}
+
+.innovations-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.innovations-list li::before {
+    content: "•";
+    color: #2563eb;
+    font-size: 1.6rem;
+    position: absolute;
+    left: 0;
+    top: -5px;
+}
+
+/* Sidebar Box */
+.sidebar-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-box h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.meta-item {
+    margin-bottom: 18px;
+}
+
+.meta-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.meta-value {
+    font-size: 0.95rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.status-active {
+    color: #16a34a;
+}
+
+.meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.meta-tags span {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .project-card {
+        flex-direction: column;
+    }
+
+    .project-card-image {
+        flex: none;
+        height: 240px;
+    }
+
+    .project-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   Materials Page Styling (Complete & Updated)
+   ========================================= */
+.materials-page {
+    padding: 120px 20px 60px 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* ================= 1. Main Featured Book Card ================= */
+.featured-book-section {
+    margin-bottom: 70px;
+}
+
+.featured-book-card {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+    align-items: center;
+}
+
+/* PDF Preview Viewer */
+.pdf-preview-container {
+    flex: 0 0 350px;
+    height: 480px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 30px;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
+    border: 1px solid #cbd5e1;
+    position: relative;
+}
+
+.pdf-preview-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Book Info */
+.book-info {
+    padding: 40px;
+    flex: 1;
+}
+
+.book-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.book-info h2 {
+    font-size: 2.2rem;
+    color: #0f172a;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.book-author {
+    color: #64748b;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+}
+
+.book-author strong {
+    color: #0f172a;
+}
+
+.book-description {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.book-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.book-features span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.book-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pdf-download-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 34px;
+    background: linear-gradient(135deg, #00a8e8 0%, #2563eb 100%);
+    color: #ffffff !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-decoration: none !important;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px -4px rgba(0, 168, 232, 0.42), 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+.pdf-download-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.pdf-download-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 18px 36px -4px rgba(0, 168, 232, 0.55), 0 6px 18px rgba(37, 99, 235, 0.35);
+    background: linear-gradient(135deg, #00b4d8 0%, #1d4ed8 100%);
+    color: #ffffff !important;
+}
+
+.pdf-download-btn:hover::before {
+    left: 100%;
+}
+
+.pdf-download-btn:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+.pdf-download-btn .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.pdf-download-btn:hover .btn-icon {
+    transform: translateY(2px);
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.pdf-download-btn .btn-arrow {
+    transition: transform 0.3s ease;
+}
+
+.pdf-download-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* ================= 2. Supplementary Resources Section ================= */
+.section-title-wrap {
+    text-align: left;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 15px;
+}
+
+.section-title-wrap h3 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.section-title-wrap p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* Stages Styling */
+.stage-section {
+    margin-bottom: 55px;
+}
+
+.stage-title {
+    font-size: 1.3rem;
+    color: #0f172a;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stage-badge {
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Resources Grid & Cards */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.resource-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.resource-card h4 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.resource-card p {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.resource-link {
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.resource-link:hover {
+    text-decoration: underline;
+}
+
+/* ================= 3. Where to Go Next Section ================= */
+.next-steps-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 45px 50px;
+    margin-top: 60px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.next-steps-section h3 {
+    font-size: 1.8rem;
+    color: #0f172a;
+    margin-bottom: 25px;
+    font-weight: 800;
+}
+
+.next-steps-section p {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+.next-steps-section p strong {
+    color: #0f172a;
+    font-size: 1.1rem;
+}
+
+/* ================= Responsive Handling (Mobile) ================= */
+@media (max-width: 900px) {
+    .featured-book-card {
+        flex-direction: column;
+    }
+
+    .pdf-preview-container {
+        flex: none;
+        width: calc(100% - 40px);
+        margin: 20px;
+        height: 400px;
+    }
+
+    .book-info {
+        padding: 25px;
+    }
+
+    .book-features {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .next-steps-section {
+        padding: 30px 25px;
+    }
+}

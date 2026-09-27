@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tectopower - EYAIF Projects</title>
+    <link rel="icon" type="image/png" href="assets/logo-S.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Custom Styles for the new TectoPower sections -->
+    <style>
+        /* Header Logo */
+        .title-with-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .project-logo {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* AI Model Section */
+        .content-image {
+            width: 100%;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Download Button Styling */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .download-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Competitions Section */
+        .competitions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .comp-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.01);
+        }
+
+        .comp-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+            transform: translateY(-2px);
+            color: #2563eb;
+        }
+
+        /* IEEE Highlight */
+        .ieee-highlight {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+        }
+
+        .ieee-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #0284c7;
+        }
+
+        .ieee-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .ieee-header h3 {
+            font-size: 1.4rem;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .top-10-badge {
+            background: #fef08a;
+            color: #854d0e;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ieee-desc {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .ieee-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .ieee-images img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e0f2fe;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* IEEE Actions (Poster & Link) */
+        .ieee-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .poster-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: #0284c7;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+        }
+
+        .poster-download-btn:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(2, 132, 199, 0.3);
+        }
+
+        .ieee-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #0284c7;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .ieee-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .competitions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ieee-images {
+                grid-template-columns: 1fr;
+            }
+
+            .title-with-logo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ieee-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="light-theme">
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="assets/logo.png" alt="EYAIF" class="site-logo">
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Mission</a></li>
+            <li><a href="materials.html">Materials</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="mentorship.html">Mentorship</a></li>
+            <li><a href="overview.html">Overview</a></li>
+            <li><a href="competition.html">Competition</a></li>
+        </ul>
+
+        <div class="nav-spacer"></div>
+    </header>
+
+    <main class="project-details-page">
+        <!-- Back Button Navigation -->
+        <div class="back-navigation">
+            <a href="projects.html">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to All Projects
+            </a>
+        </div>
+
+        <!-- Detail Header -->
+        <div class="detail-header">
+            <span class="header-tag">CLEAN TECH & AI RESEARCH</span>
+
+            <div class="title-with-logo">
+                <img src="assets/tectopower-logo.jpg" alt="TectoPower Logo" class="project-logo">
+                <h1>Tecto-Power Project</h1>
+            </div>
+
+            <p class="detail-lead">Predicting earthquakes and harnessing their immense energy to generate electricity.
+            </p>
+        </div>
+
+        <!-- Main Banner Photo / Video Frame -->
+        <div class="project-hero-media">
+            <img src="assets/tectopower.jpg" alt="Tectopower High Resolution Banner">
+        </div>
+
+        <!-- Project Article Layout -->
+        <div class="project-content-grid">
+
+            <div class="main-article-content">
+                <section class="content-block">
+                    <h2>Project Overview</h2>
+                    <p>
+                        TectoPower is a comprehensive solution to the global earthquake crisis.
+                        <br><br>
+                        Earthquakes are a powerful natural force that can release enormous amounts of energy, strike
+                        without warning, destroy cities, and cause significant loss of life.
+                        <br><br>
+                        Our project aims to address three major challenges associated with earthquakes: prediction,
+                        energy utilization, and structural protection.
+                        <br><br>
+                        First, we developed an AI-powered earthquake prediction model trained on data collected from
+                        thousands of sensors that have recorded seismic activity from previous earthquakes. We also
+                        incorporated additional factors, including the potential relationship between earthquake
+                        activity and lunar movements, as well as low-frequency seismic waves and other signals that
+                        may occur before an earthquake. By analyzing these patterns, the model can estimate the
+                        probability of future earthquake activity at different levels of likelihood.
+                        <br><br>
+                        Second, we developed a prototype capable of generating electrical energy from earthquake
+                        vibrations, based on Faraday’s law of electromagnetic induction. The concept aims to
+                        transform part of the mechanical energy produced by seismic movement into usable electrical
+                        energy.
+                        <br><br>
+                        Finally, to reduce the destructive impact of earthquakes on buildings, we drew inspiration from
+                        Japanese earthquake-resistant engineering techniques. Our design incorporates spring-based
+                        isolation systems beneath buildings, allowing the structure to absorb and reduce seismic
+                        vibrations, helping protect buildings from severe structural damage or collapse.
+                        <br><br>
+                        Through these three integrated solutions, TectoPower aims to transform earthquakes from an
+                        unpredictable and destructive threat into a phenomenon that can be better predicted, partially
+                        utilized as an energy source, and mitigated through innovative structural protection.
+                    </p>
+                </section>
+
+                <section class="content-block">
+                    <h2>Core Innovations</h2>
+                    <ul class="innovations-list">
+                        <li><strong>AI Model:</strong> It works to predict earthquakes more than six hours before they
+                            occur.</li>
+                        <li><strong>Electricity from Earthquakes:</strong> The ability to convert a large amount of
+                            earthquake energy into electrical energy.</li>
+                    </ul>
+                </section>
+
+                <!-- AI Model Visual & Download Section -->
+                <section class="content-block">
+                    <h2>The AI Architecture</h2>
+                    <p>Take a glimpse into the AI model powering our predictions. The model analyzes complex seismic
+                        datasets to forecast potential threats accurately. You can download the core prediction model
+                        source code below.</p>
+
+                    <img src="assets/ai-model-diagram.jpg" alt="AI Model Visualization" class="content-image">
+
+                    <!-- Download Link Button -->
+                    <div>
+                        <!-- استبدل الرابط بمسار ملف الكود الخاص بك -->
+                        <a href="assets/simple_seis_model.py" download class="download-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download AI Model Code
+                        </a>
+                    </div>
+                </section>
+
+                <section class="content-block">
+                    <h2>Results</h2>
+                    <p>
+                        Tests conducted in a virtual environment have demonstrated Tecto-Power's high capability for
+                        earthquake prediction and its high efficiency in converting earthquake-generated energy into
+                        electrical energy.
+                    </p>
+                </section>
+
+                <!-- Competitions Section -->
+                <section class="content-block">
+                    <h2>Global Competitions & Recognitions</h2>
+                    <p>TectoPower has been presented and recognized at several prestigious global stages:</p>
+
+                    <div class="competitions-grid">
+                        <a href="https://blueoceancompetition.org/" target="_blank" class="comp-card">
+                            Blue Ocean Competition
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                        <a href="http://www.worldof8billion.org" target="_blank" class="comp-card">
+                            World of 8 Billion
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                        <a href="https://isef.net/" target="_blank" class="comp-card">
+                            ISEF
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                        <a href="https://www.theearthprize.org/" target="_blank" class="comp-card">
+                            The Earth Prize
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- IEEE Highlight -->
+                    <div class="ieee-highlight">
+                        <div class="ieee-header">
+                            <h3>IEEE IC-ESI Competition</h3>
+                            <span class="top-10-badge">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                                    </path>
+                                </svg>
+                                Top 6 Finalists
+                            </span>
+                        </div>
+                        <p class="ieee-desc">We are incredibly proud to have qualified among the Top 6 exceptional
+                            projects in the prestigious IEEE competition, showcasing our commitment to engineering and
+                            innovation.</p>
+
+                        <div class="ieee-images">
+                            <img src="assets/ieee-honoring.jpg" alt="IEEE Honoring Ceremony">
+                            <img src="assets/ieee-shield.jpg" alt="IEEE Achievement Shield">
+                        </div>
+
+                        <!-- New Action Buttons Container -->
+                        <div class="ieee-actions">
+                            <!-- Download Poster Button -->
+                            <a href="assets/TectoPower POSTER.pdf" target="_blank" class="poster-download-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Download Project Poster (PDF)
+                            </a>
+
+                            <!-- View Details Link -->
+                            <a href="https://r8.ieee.org/egypt-apmtt/ic-esi-competition/" target="_blank"
+                                class="ieee-link">
+                                View Official Competition Details
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar Info Box -->
+            <aside class="project-sidebar">
+                <div class="sidebar-box">
+                    <h3>Project Metadata</h3>
+
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-value">Clean Technology & AI</span>
+                    </div>
+
+                    <div class="meta-item">
+                        <span class="meta-label">Status</span>
+                        <span class="meta-value status-active">Active Prototype</span>
+                    </div>
+
+                    <div class="meta-item">
+                        <span class="meta-label">Tech Stack</span>
+                        <div class="meta-tags">
+                            <span>Python</span>
+                            <span>IoT Sensors</span>
+                        </div>
+                    </div>
+
+                    <div class="meta-item">
+                        <span class="meta-label">Team / Contributors</span>
+                        <span class="meta-value">EYAIF Research Team</span>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span class="logo-text">EYAIF</span>
+            </div>
+
+            <div class="footer-right">
+                <div class="copyright">
+                    Copyright 2026 EYAIF Foundation.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
