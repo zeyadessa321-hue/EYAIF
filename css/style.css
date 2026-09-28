@@ -943,11 +943,13 @@ body.light-theme .nav-links a.active {
 }
 
 .styled-list li::before {
-    content: "✓";
+    content: "•";
     position: absolute;
-    left: 0;
+    left: 4px;
+    top: -1px;
     color: #10b981;
-    font-weight: 900;
+    font-size: 1.4rem;
+    line-height: 1;
 }
 
 .gains-list li::before {
